@@ -1,18 +1,110 @@
-Topic-Smart Carbon Footprint Tracking and Recommendation System for Urban Households 
+# 🌱 CarbonTrack – Household Carbon Footprint Monitoring System
 
-Source- Developed by Self 
+CarbonTrack is a sustainability analytics platform designed to monitor and analyze household carbon emissions based on resource consumption patterns such as electricity usage, water consumption, transportation fuel and cooking gas usage.
 
-Description- 
-Urban Households contribute to significant amounts of carbon emissions through the excess use of electricity,water and fuel. Some lack the awareness how their daily activities contribute to the environmental impact while others lack the civic sense of the mindset to conserve the resources for sustainable development. This demand the need for a user friendly centralized platform to monitor individual footprints and provide incentives to save resources and contribute to a cleaner greener environment and essentially smart cities. 
+---
 
-Plan- 
-1)Collect data of monthly/yearly consumption of electricity,water,fuel and lpg 
-2)By using KPIs we calculate the minimum need and the excess used 
-3)Using a user friendly dashboard we show the footprint and other important data and personalized suggestions based on user habits 
-4)Incentive Program and keeping a community leaderboard 
+## 📌 Project Objective
 
-Technology Stack- 
-1) Frontend-React 
-2) Backend-Python/Node.js 
-3) Database- PostgreSQL/MongoDB 
-4) ML- for recommendation system 
+The primary objective of CarbonTrack is to:
+
+- Monitor household carbon emissions
+- Provide analytical insights on environmental impact
+- Enable sustainability goal tracking
+- Generate personalized eco-friendly recommendations
+- Encourage sustainable practices through gamification
+
+---
+
+## 🏗 System Architecture
+
+CarbonTrack follows a modular client-server architecture consisting of:
+
+- **Presentation Layer** – ReactJS based UI for user interaction and visualization
+- **Application Layer** – FastAPI backend for emission calculation and KPI analysis
+- **Data Layer** – CSV-based persistence for storing user profiles and emissions data
+
+Frontend and backend communicate through RESTful APIs.
+
+---
+
+## 🔑 Features
+
+- Multi-user authentication
+- Emission monitoring dashboard
+- Resource-wise emissions breakdown
+- KPI-based sustainability analysis
+- Monthly carbon budget tracking
+- Personalized eco-friendly recommendations
+- Leaderboard and eco-points system
+- Emissions history tracking
+- Automated report generation
+
+---
+
+## 🛠 Technologies Used
+
+| Layer | Technology |
+|-------|------------|
+Frontend | ReactJS |
+Backend | FastAPI |
+Data Processing | Pandas |
+Visualization | Recharts |
+Persistence | CSV |
+
+---
+
+## 📊 Modules
+
+- Authentication Module
+- Dashboard Module
+- Emission Analytics Module
+- KPI Analysis Module
+- Goal Management Module
+- Recommendation Engine
+- Gamification Module
+- History Tracking Module
+- Report Generation Module
+
+---
+
+## 📁 Project Structure
+carbontrack/
+├── frontend/
+├── backend/
+├── data/
+├── services/
+├── api/
+└── reports/
+
+---
+
+## ▶️ How to Run
+
+### Backend
+
+cd carbon-backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+(you can also use a virtual environment if needed)
+
+### Frontend
+
+cd carbon-frontend
+npm install
+npm run dev
+
+---
+
+## 📈 Future Enhancements
+
+- Integration with IoT-based smart meters
+- Cloud-based database support
+- Mobile application support
+- Real-time emissions tracking
+
+---
+
+## 👨‍💻 Contributors
+
+Project developed as part of Software Engineering coursework.
