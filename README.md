@@ -135,18 +135,19 @@ carbon-backend/
 ## ▶️ How to Run
 
 ### Backend
-
+```
 cd carbon-backend
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+```
 (you can also use a virtual environment if needed)
 
 ### Frontend
-
+```
 cd carbon-frontend
 npm install
 npm run dev
-
+```
 ---
 
 ## 📈 Future Enhancements
