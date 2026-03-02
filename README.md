@@ -69,13 +69,66 @@ Persistence | CSV |
 ---
 
 ## 📁 Project Structure
-carbontrack/
-├── frontend/
-├── backend/
+```
+carbon-frontend/
+│
+├── src/
+│   ├── components/
+│   │   ├── EmissionsChart.jsx
+│   │   ├── KPIAnalysis.jsx
+│   │   ├── Leaderboard.jsx
+│   │   ├── Recommendations.jsx
+│   │   └── NatureEquivalent.jsx
+│   │
+│   ├── pages/
+│   │   ├── Dashboard.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   └── History.jsx
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── global.css
+│
+├── index.html
+├── tailwind.config.js
+├── postcss.config.js
+└── package.json
+```
+
+```
+carbon-backend/
+│
+├── app/
+│   ├── api/
+│   │   └── routes/
+│   │       ├── auth.py
+│   │       ├── dashboard.py
+│   │       ├── emissions.py
+│   │       ├── consumption.py
+│   │       └── incentives.py
+│   │
+│   ├── services/
+│   │   ├── emission_service.py
+│   │   ├── incentive_service.py
+│   │   └── recommendation_service.py
+│   │
+│   ├── core/
+│   │   ├── data_store.py
+│   │   ├── security.py
+│   │   └── config.py
+│   │
+│   └── main.py
+│
 ├── data/
-├── services/
-├── api/
-└── reports/
+│   ├── users.csv
+│   ├── daily_emissions.csv
+│   ├── incentives.csv
+│   ├── carbon_summary.csv
+│   └── user_goals.csv
+│
+└── requirements.txt
+```
 
 ---
 
