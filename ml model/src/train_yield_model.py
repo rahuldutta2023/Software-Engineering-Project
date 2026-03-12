@@ -3,15 +3,10 @@
 # Output: models/yield_predictor.pkl
 #
 # Approach  : SIH hyperparameters (300 estimators, max_depth=10)
-#             + friend's clean feature engineering (no data leakage)
+#             + clean feature engineering (no data leakage)
 #             + RepeatedKFold & Monte Carlo CV
 #
-# ⚠️  Data Leakage Warning (original SIH notebook):
-#     Water_Use_Efficiency = Yield / Irrigation  ← uses target
-#     Fertilizer_Productivity = Yield / Fertilizer ← uses target
-#     Both features were removed. They caused an inflated R² of 99.78%.
-#     This version uses only input-derived features and produces an
-#     honest, deployable model (~13 MB vs the 51 MB unregularized version).
+
 
 import os
 import time
