@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
 
-app = FastAPI(title="Agri-ML Local API")
+app = FastAPI(title="AgriSense API")
 
 # Enable CORS
 app.add_middleware(

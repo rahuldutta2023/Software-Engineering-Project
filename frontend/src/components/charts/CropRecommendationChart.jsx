@@ -22,8 +22,8 @@ const CropRecommendationChart = ({ cropResult }) => {
       data: crops.map(c => c.probability.toFixed(2)),
       backgroundColor: COLORS.slice(0, crops.length),
       borderColor: COLORS.slice(0, crops.length).map(c => c + 'dd'),
-      borderWidth: 1,
-      borderRadius: 6,
+      borderWidth: 3,
+      borderRadius: 8,
     }],
   };
 
@@ -49,7 +49,7 @@ const CropRecommendationChart = ({ cropResult }) => {
         beginAtZero: true,
         max: 100,
         title: { display: true, text: 'Probability (%)' },
-        grid: { color: 'rgba(0,0,0,0.05)' },
+        grid: { color: 'rgba(128, 128, 128, 0.15)' },
       },
       x: { grid: { display: false } },
     },

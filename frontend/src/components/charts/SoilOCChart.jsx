@@ -21,7 +21,7 @@ const SoilOCChart = ({ dynamicData }) => {
         }),
         backgroundColor: PALETTE,
         borderColor: '#fff',
-        borderWidth: 2,
+        borderWidth: 3,
       }],
     };
   }, []);

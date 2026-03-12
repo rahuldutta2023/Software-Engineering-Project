@@ -2,7 +2,7 @@
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition), transform var(--transition);
   display: flex;
@@ -20,18 +20,19 @@
 
 .chart-card-title {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   color: var(--text-primary);
+  font-weight: 600;
 }
 
 .chart-card-subtitle {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
-  margin-top: 0.2rem;
+  margin-top: 0.4rem;
 }
 
 .chart-canvas {
-  height: 280px;
+  height: 380px;
   position: relative;
   flex: 1;
 }

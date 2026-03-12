@@ -16,7 +16,9 @@ const RadarProfileChart = ({ inputs }) => {
         backgroundColor: 'rgba(74,124,89,0.15)',
         borderColor: '#4a7c59',
         pointBackgroundColor: '#4a7c59',
-        borderWidth: 2,
+        borderWidth: 4,
+        pointRadius: 5,
+        pointHoverRadius: 8,
       },
       {
         label: 'Ideal — Rice',
@@ -24,8 +26,10 @@ const RadarProfileChart = ({ inputs }) => {
         backgroundColor: 'rgba(58,110,168,0.10)',
         borderColor: '#3a6ea8',
         pointBackgroundColor: '#3a6ea8',
-        borderWidth: 2,
+        borderWidth: 4,
         borderDash: [5, 3],
+        pointRadius: 5,
+        pointHoverRadius: 8,
       },
     ],
   };
@@ -40,8 +44,8 @@ const RadarProfileChart = ({ inputs }) => {
     scales: {
       r: {
         beginAtZero: true,
-        angleLines: { color: 'rgba(0,0,0,0.08)' },
-        grid: { color: 'rgba(0,0,0,0.08)' },
+        angleLines: { color: 'rgba(128, 128, 128, 0.2)' },
+        grid: { color: 'rgba(128, 128, 128, 0.2)' },
         pointLabels: { font: { size: 12 }, color: 'var(--text-secondary)' },
       },
     },

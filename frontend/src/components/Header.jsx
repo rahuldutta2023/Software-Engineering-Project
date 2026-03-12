@@ -14,13 +14,12 @@ const Header = ({ theme, onToggleTheme }) => (
       <div className="header-brand">
         <span className="header-icon"><LeafIcon /></span>
         <div>
-          <span className="header-wordmark">Crop<em>AI</em></span>
-          <span className="header-tagline">Agricultural Intelligence Platform</span>
+          <span className="header-wordmark">Agri<em>Sense</em></span>
+          <span className="header-tagline">Intelligent Agriculture Platform</span>
         </div>
       </div>
 
       <div className="header-actions">
-        <span className="header-badge">SIH 2025</span>
         <button
           className="theme-toggle"
           onClick={onToggleTheme}

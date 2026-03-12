@@ -27,7 +27,7 @@ const FertilizerChart = ({ dynamicData }) => {
         }),
         backgroundColor: PALETTE,
         borderColor: PALETTE.map(c => c.replace('0.65', '1')),
-        borderWidth: 1,
+        borderWidth: 3,
       }],
     };
   }, []);

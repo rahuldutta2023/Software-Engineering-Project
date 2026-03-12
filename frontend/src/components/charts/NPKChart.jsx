@@ -10,8 +10,8 @@ const NPKChart = ({ inputs }) => {
       data: [inputs.N, inputs.P, inputs.K],
       backgroundColor: ['#4a7c59cc', '#3a6ea8cc', '#c8860acc'],
       borderColor: ['#4a7c59', '#3a6ea8', '#c8860a'],
-      borderWidth: 2,
-      borderRadius: 6,
+      borderWidth: 4,
+      borderRadius: 8,
     }],
   };
 
@@ -35,7 +35,7 @@ const NPKChart = ({ inputs }) => {
         beginAtZero: true,
         max: 300,
         title: { display: true, text: 'Concentration (kg/ha)' },
-        grid: { color: 'rgba(0,0,0,0.05)' },
+        grid: { color: 'rgba(128, 128, 128, 0.15)' },
       },
       y: { grid: { display: false } },
     },

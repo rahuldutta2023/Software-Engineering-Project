@@ -1,96 +1,42 @@
-# 🌾 Crop AI — ML Training Module
-> Part of the Crop Yield Prediction and Recommendation System (SIH 2025)
+# Machine Learning Models
 
----
+This directory contains the source code, data, and trained models for crop recommendation and yield prediction.
 
-## Project Structure
+## Overview
 
-```
-ml model/
-├── data/
-│   ├── Crop_recommendation_balanced.csv   # 8800 samples, 22 crops, 13 columns
-│   ├── crop_data.json                     # Crop metadata (keep as-is)
-│   └── csv_to_json.py                     # Utility to convert CSV → JSON (keep as-is)
-│
-├── models/                                # Saved .pkl files + plots (auto-generated)
-│
-├── src/
-│   ├── train_crop_model.py                # Train crop recommendation classifier
-│   └── train_yield_model.py               # Train crop yield regressor
-│
-├── requirements.txt
-└── README.md
-```
+We utilize two primary models to provide agricultural insights:
+1.  **Crop Recommendation Model**: A Random Forest Classifier that suggests the best crops to grow based on soil and weather conditions.
+2.  **Yield Prediction Model**: A Random Forest Regressor that forecasts the expected yield (tonnes/hectare) for a chosen scenario.
 
----
+## Dataset
 
-## Models
+The models are trained on the [Crop_recommendation_balanced.csv](data/Crop_recommendation_balanced.csv) dataset, which include:
+- **Agronomic Inputs (7)**: Nitrogen (N), Phosphorous (P), Potassium (K), Temperature, Humidity, pH, and Rainfall.
+- **Additional Yield Features (4)**: Organic Carbon (Soil_OC), Fertilizer usage, Pest Index, and Irrigation.
 
-### Crop Recommendation (`train_crop_model.py`)
-- **Type:** Random Forest Classifier (multi-class, probabilistic Top-K output)
-- **Features:** N, P, K, temperature, humidity, ph, rainfall (7 inputs)
-- **Output:** `crop_recommendation_topk_model.pkl`
-- **Test Accuracy:** ~99.09%
-- **CV:** Repeated K-Fold (10×5) + Monte Carlo (ShuffleSplit ×20)
+## Training Process
 
-### Yield Prediction (`train_yield_model.py`)
-- **Type:** Random Forest Regressor
-- **Features:** 11 raw inputs + 5 engineered interaction terms (16 total)
-- **Output:** `yield_predictor.pkl`
-- **Test R²:** ~0.97+ | MAE < 0.3 t/ha
-- **CV:** Repeated K-Fold (10×5) + Monte Carlo (ShuffleSplit ×20)
-- **Model size:** ~13 MB (4× smaller than unregularized baseline)
+The training scripts are located in the `src/` directory.
 
-#### Engineered Features (no data leakage)
-| Feature | Formula |
-|---|---|
-| Nutrient_Balance_Index | (N + P + K) / 3 |
-| Stress_Index | temperature × (1 − humidity/100) |
-| Rainfall_N_Interaction | rainfall × N |
-| Temp_Humidity_Interaction | temperature × humidity |
-| Fertilizer_Rainfall_Interaction | Fertilizer_kg_ha × rainfall |
+### 1. Crop Recommendation ([train_crop_model.py](src/train_crop_model.py))
+- **Model**: Random Forest Classifier (300 estimators).
+- **Preprocessing**: `StandardScaler` for feature normalization.
+- **Evaluation**: 
+    - achieves ~99% accuracy on test data.
+    - Verified using **Repeated K-Fold** and **Monte Carlo Cross-Validation**.
+- **Output**: `models/crop_recommendation_topk_model.pkl`.
 
----
+### 2. Yield Prediction ([train_yield_model.py](src/train_yield_model.py))
+- **Model**: Random Forest Regressor (300 estimators, restricted `max_depth=10` for better generalization).
+- **Feature Engineering**: Engineered interactions like `Nutrient_Balance_Index` and `Stress_Index` while strictly avoiding target leakage.
+- **Inference Efficiency**: The model is regularized to be lean (~10MB) for fast API response times.
+- **Output**: `models/yield_predictor.pkl`.
 
-## Getting Started
+## Usage
+
+The trained models are loaded by the FastAPI backend to serve predictions to the frontend dashboard. To retrain the models, ensure you have the requirements installed and run the scripts in `src/`.
 
 ```bash
-# 1. Install dependencies
-pip install -r requirements.txt
-
-# 2. Train the crop recommendation model
 python src/train_crop_model.py
-
-# 3. Train the yield prediction model
 python src/train_yield_model.py
 ```
-
-Both scripts save their `.pkl` files and diagnostic plots into `models/`.
-
----
-
-## Generated Outputs (in `models/`)
-
-| File | Description |
-|---|---|
-| `crop_recommendation_topk_model.pkl` | Trained classifier pipeline |
-| `yield_predictor.pkl` | Trained regressor pipeline |
-| `crop_eda.png` | Correlation heatmap + class distribution |
-| `crop_confusion_matrix.png` | Confusion matrix on test set |
-| `crop_cv_scores.png` | CV score box plot |
-| `crop_feature_importance.png` | Feature importance bar chart |
-| `yield_eda.png` | Yield distribution + feature correlations |
-| `yield_actual_vs_predicted.png` | Scatter + residual distribution |
-| `yield_cv_scores.png` | CV R² box plot |
-| `yield_feature_importance.png` | Top-10 feature importances |
-
----
-
-## API Integration
-
-These models are consumed by the FastAPI backend (`agri-ml-esmq.onrender.com`):
-
-| Endpoint | Model used |
-|---|---|
-| `POST /recommend_crop?k=3` | `crop_recommendation_topk_model.pkl` |
-| `POST /predict_yield` | `yield_predictor.pkl` |

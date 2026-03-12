@@ -16,8 +16,8 @@ const PestIndexChart = ({ dynamicData }) => {
         }),
         backgroundColor: '#d44a2acc',
         borderColor: '#d44a2a',
-        borderWidth: 1,
-        borderRadius: 4,
+        borderWidth: 3,
+        borderRadius: 6,
       }],
     };
   }, []);
@@ -38,7 +38,7 @@ const PestIndexChart = ({ dynamicData }) => {
       },
     },
     scales: {
-      x: { beginAtZero: true, title: { display: true, text: 'Index Value' }, grid: { color: 'rgba(0,0,0,0.05)' } },
+      x: { beginAtZero: true, title: { display: true, text: 'Index Value' }, grid: { color: 'rgba(128, 128, 128, 0.15)' } },
       y: { grid: { display: false }, ticks: { font: { size: 11 } } },
     },
     layout: { padding: { right: 30 } },
