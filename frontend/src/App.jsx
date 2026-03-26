@@ -2,23 +2,26 @@ import React, { useMemo, useState } from "react";
 import "./index.css";
 import "./styles/AppShell.css";
 
-import Header from "./components/Header";
+import Header    from "./components/Header";
 import BottomNav from "./components/BottomNav";
 
-import Login from "./pages/Login";
-import FarmerTools from "./pages/FarmerTools";
+import Login        from "./pages/Login";
+import FarmerTools  from "./pages/FarmerTools";
 import CropRecommend from "./pages/CropRecommend";
-import History from "./pages/History";
-import Dashboard from "./Dashboard";
-import { t } from "./i18n";
+import History      from "./pages/History";
+import { t }        from "./i18n";
 
 function App() {
   const [theme, setTheme] = useState("light");
   const toggleTheme = () => setTheme((t) => (t === "light" ? "dark" : "light"));
 
-  const [page, setPage] = useState("dashboard");
+  // "croprecommend" is now the landing / home page (replaces dashboard)
+  const [page, setPage] = useState("croprecommend");
   const isAuthed = useMemo(() => Boolean(localStorage.getItem("token")), []);
   const [lang, setLang] = useState(() => localStorage.getItem("ct_lang") || "en");
+
+  // Lifted cropResult so FarmerTools can show crop-specific advice
+  const [cropResult, setCropResult] = useState(null);
 
   const handleChangeLang = (next) => {
     setLang(next);
@@ -29,8 +32,7 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("full_name");
     localStorage.removeItem("user_email");
-    setPage("dashboard");
-    // Force re-render by reloading page state
+    setPage("croprecommend");
     window.location.reload();
   };
 
@@ -44,7 +46,7 @@ function App() {
             lang={lang}
             onChangeLang={handleChangeLang}
             onLogin={() => {
-              setPage("dashboard");
+              setPage("croprecommend");
               window.location.reload();
             }}
           />
@@ -54,21 +56,35 @@ function App() {
   }
 
   const navItems = [
-    { id: "dashboard", label: t(lang, "navDashboard"), icon: "🌾" },
-    { id: "farmertools", label: t(lang, "navTools"), icon: "🧰", farmerTab: true },
-    { id: "croprecommend", label: t(lang, "navCropAI"), icon: "🧪" },
-    { id: "history", label: t(lang, "navHistory"), icon: "📈" },
+    { id: "croprecommend", label: t(lang, "navCropAI"),   icon: "🌾" },
+    { id: "farmertools",   label: t(lang, "navTools"),     icon: "🧰", farmerTab: true },
+    { id: "history",       label: t(lang, "navHistory"),   icon: "📈" },
   ];
 
   return (
     <div className="app-shell" data-theme={theme}>
       <div className="app-content app-pad-bottom">
-        <Header theme={theme} onToggleTheme={toggleTheme} lang={lang} onChangeLang={handleChangeLang} />
+        <Header
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          lang={lang}
+          onChangeLang={handleChangeLang}
+        />
 
-        <div style={{ paddingTop: 0 }}>
-          {page === "dashboard" && <Dashboard theme={theme} lang={lang} />}
-          {page === "farmertools" && <FarmerTools lang={lang} />}
-          {page === "croprecommend" && <CropRecommend theme={theme} lang={lang} />}
+        <div>
+          {page === "croprecommend" && (
+            <CropRecommend
+              theme={theme}
+              lang={lang}
+              onCropResultChange={setCropResult}
+            />
+          )}
+          {page === "farmertools" && (
+            <FarmerTools
+              lang={lang}
+              recommendedCrops={cropResult?.top_crops || null}
+            />
+          )}
           {page === "history" && <History lang={lang} />}
         </div>
 

@@ -2,24 +2,25 @@ import React from 'react';
 import './InputForm.css';
 import { t } from "../i18n";
 
+// Maps field key → { labelKey, unit, group }
 const FIELD_META = {
-  N:                 { label: 'Nitrogen (N)',       unit: 'kg/ha',  group: 'soil' },
-  P:                 { label: 'Phosphorus (P)',      unit: 'kg/ha',  group: 'soil' },
-  K:                 { label: 'Potassium (K)',        unit: 'kg/ha',  group: 'soil' },
-  ph:                { label: 'Soil pH',              unit: '',       group: 'soil' },
-  Soil_OC:           { label: 'Soil Organic Carbon',  unit: '%',      group: 'soil' },
-  temperature:       { label: 'Temperature',          unit: '°C',     group: 'climate' },
-  humidity:          { label: 'Humidity',             unit: '%',      group: 'climate' },
-  rainfall:          { label: 'Rainfall',             unit: 'mm',     group: 'climate' },
-  Fertilizer_kg_ha:  { label: 'Fertilizer Applied',  unit: 'kg/ha',  group: 'farm' },
-  Pest_Index:        { label: 'Pest Index',           unit: '',       group: 'farm' },
-  Irrigation_mm:     { label: 'Irrigation',           unit: 'mm',     group: 'farm' },
+  N:                 { labelKey: 'fieldN',           unit: 'kg/ha',  group: 'soil' },
+  P:                 { labelKey: 'fieldP',            unit: 'kg/ha',  group: 'soil' },
+  K:                 { labelKey: 'fieldK',            unit: 'kg/ha',  group: 'soil' },
+  ph:                { labelKey: 'fieldPh',           unit: '',       group: 'soil' },
+  Soil_OC:           { labelKey: 'fieldSoilOC',       unit: '%',      group: 'soil' },
+  temperature:       { labelKey: 'fieldTemperature',  unit: '°C',     group: 'climate' },
+  humidity:          { labelKey: 'fieldHumidity',     unit: '%',      group: 'climate' },
+  rainfall:          { labelKey: 'fieldRainfall',     unit: 'mm',     group: 'climate' },
+  Fertilizer_kg_ha:  { labelKey: 'fieldFertilizer',  unit: 'kg/ha',  group: 'farm' },
+  Pest_Index:        { labelKey: 'fieldPestIndex',    unit: '',       group: 'farm' },
+  Irrigation_mm:     { labelKey: 'fieldIrrigation',  unit: 'mm',     group: 'farm' },
 };
 
-const GROUP_LABELS = {
-  soil:    { icon: '🌍', title: 'Soil Parameters' },
-  climate: { icon: '🌤️',  title: 'Climate Data' },
-  farm:    { icon: '🚜',  title: 'Farm Inputs' },
+const GROUP_META = {
+  soil:    { icon: '🌍', labelKey: 'groupSoil' },
+  climate: { icon: '🌤️',  labelKey: 'groupClimate' },
+  farm:    { icon: '🚜',  labelKey: 'groupFarm' },
 };
 
 const InputForm = ({ inputs, onChange, onPredict, loading, error, lang = "en" }) => {
@@ -35,15 +36,15 @@ const InputForm = ({ inputs, onChange, onPredict, loading, error, lang = "en" })
       <div className="input-groups">
         {groups.map(group => {
           const fields = Object.entries(FIELD_META).filter(([, m]) => m.group === group);
-          const { icon, title } = GROUP_LABELS[group];
+          const { icon, labelKey } = GROUP_META[group];
           return (
             <div key={group} className="input-group">
-              <h3 className="group-label">{icon} {title}</h3>
+              <h3 className="group-label">{icon} {t(lang, labelKey)}</h3>
               <div className="fields-grid">
                 {fields.map(([key, meta]) => (
                   <div key={key} className="field-wrap">
                     <label className="field-label">
-                      {meta.label}
+                      {t(lang, meta.labelKey)}
                       {meta.unit && <span className="field-unit">{meta.unit}</span>}
                     </label>
                     <input
@@ -69,7 +70,7 @@ const InputForm = ({ inputs, onChange, onPredict, loading, error, lang = "en" })
           disabled={loading}
         >
           {loading ? (
-            <><span className="spinner" /> Analysing…</>
+            <><span className="spinner" /> {t(lang, "predictCta")}…</>
           ) : (
             <> {t(lang, "predictCta")}</>
           )}
