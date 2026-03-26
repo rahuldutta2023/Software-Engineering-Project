@@ -32,9 +32,13 @@
 }
 
 .chart-canvas {
-  height: 380px;
+  height: 330px;
   position: relative;
   flex: 1;
+}
+
+@media (max-width: 600px) {
+  .chart-canvas { height: 260px; }
 }
 
 .chart-placeholder {

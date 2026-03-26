@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import { Bar } from 'react-chartjs-2';
 import ChartCard from './ChartCard';
 import mockData from '../../crop_data.json';
+import { t } from "../../i18n";
 
-const PestIndexChart = ({ dynamicData }) => {
+const PestIndexChart = ({ dynamicData, theme = "light", lang = "en" }) => {
   const initial = useMemo(() => {
     const labels = [...new Set(mockData.map(d => d.label))];
     return {
@@ -22,6 +23,10 @@ const PestIndexChart = ({ dynamicData }) => {
     };
   }, []);
 
+  const isDark = theme === "dark";
+  const textSecondary = isDark ? "#a0b09e" : "#5a5a52";
+  const gridColor = isDark ? "rgba(255,255,255,0.12)" : "rgba(128,128,128,0.15)";
+
   const options = {
     indexAxis: 'y',
     responsive: true,
@@ -33,20 +38,20 @@ const PestIndexChart = ({ dynamicData }) => {
         anchor: 'end',
         align: 'end',
         formatter: v => v,
-        color: 'var(--text-secondary)',
+        color: textSecondary,
         font: { size: 10 },
       },
     },
     scales: {
-      x: { beginAtZero: true, title: { display: true, text: 'Index Value' }, grid: { color: 'rgba(128, 128, 128, 0.15)' } },
-      y: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      x: { beginAtZero: true, title: { display: true, text: 'Index Value', color: textSecondary }, grid: { color: gridColor }, ticks: { color: textSecondary } },
+      y: { grid: { display: false }, ticks: { font: { size: 11 }, color: textSecondary } },
     },
     layout: { padding: { right: 30 } },
   };
 
   return (
     <ChartCard
-      title="🐛 Pest Index Distribution"
+      title={t(lang, "chartPestTitle")}
       subtitle={dynamicData ? 'Filtered to recommended crops' : 'All crops in dataset'}
     >
       <Bar data={dynamicData || initial} options={options} />

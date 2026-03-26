@@ -1,5 +1,6 @@
 import React from 'react';
 import './InputForm.css';
+import { t } from "../i18n";
 
 const FIELD_META = {
   N:                 { label: 'Nitrogen (N)',       unit: 'kg/ha',  group: 'soil' },
@@ -21,16 +22,14 @@ const GROUP_LABELS = {
   farm:    { icon: '🚜',  title: 'Farm Inputs' },
 };
 
-const InputForm = ({ inputs, onChange, onPredict, loading, error }) => {
+const InputForm = ({ inputs, onChange, onPredict, loading, error, lang = "en" }) => {
   const groups = ['soil', 'climate', 'farm'];
 
   return (
     <section className="input-form-section">
       <div className="section-header">
-        <h2 className="section-title">Enter Field Data</h2>
-        <p className="section-subtitle">
-          Provide soil, climate, and farm parameters for AI-powered predictions
-        </p>
+        <h2 className="section-title">{t(lang, "inputHeroTitle")}</h2>
+        <p className="section-subtitle">{t(lang, "inputHeroSub")}</p>
       </div>
 
       <div className="input-groups">
@@ -72,7 +71,7 @@ const InputForm = ({ inputs, onChange, onPredict, loading, error }) => {
           {loading ? (
             <><span className="spinner" /> Analysing…</>
           ) : (
-            <> Get AI Predictions</>
+            <> {t(lang, "predictCta")}</>
           )}
         </button>
         {error && <p className="form-error">{error}</p>}

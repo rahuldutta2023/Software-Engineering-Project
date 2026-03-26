@@ -1,5 +1,6 @@
 import React from 'react';
 import './SummaryCards.css';
+import { t } from "../i18n";
 
 const Card = ({ icon, label, value, sub, accent }) => (
   <div className={`summary-card accent-${accent}`}>
@@ -12,7 +13,7 @@ const Card = ({ icon, label, value, sub, accent }) => (
   </div>
 );
 
-const SummaryCards = ({ yieldResult, cropResult, grossRevenue }) => {
+const SummaryCards = ({ yieldResult, cropResult, grossRevenue, lang = "en" }) => {
   const topCrop = cropResult?.top_crops?.[0];
   const cropName = topCrop
     ? topCrop.crop.charAt(0).toUpperCase() + topCrop.crop.slice(1)
@@ -23,27 +24,27 @@ const SummaryCards = ({ yieldResult, cropResult, grossRevenue }) => {
     <div className="summary-cards">
       <Card
         icon="🌾"
-        label="Predicted Yield"
+        label={t(lang, "summaryYieldLabel")}
         value={yieldResult ? `${yieldResult.predicted_yield_t_ha.toFixed(2)} t/ha` : null}
         accent="green"
       />
       <Card
         icon="🌱"
-        label="Best Crop Match"
+        label={t(lang, "summaryCropLabel")}
         value={cropName}
         sub={cropProb}
         accent="blue"
       />
       <Card
         icon="💰"
-        label="Est. Gross Revenue"
+        label={t(lang, "summaryRevenueLabel")}
         value={grossRevenue ? `₹ ${Number(grossRevenue).toLocaleString('en-IN')}` : null}
         sub={cropName ? `Based on ${cropName} MSP` : null}
         accent="amber"
       />
       <Card
         icon="🕐"
-        label="Last Run"
+        label={t(lang, "summaryLastRunLabel")}
         value={yieldResult ? new Date(yieldResult.timestamp).toLocaleTimeString() : null}
         accent="neutral"
       />

@@ -1,12 +1,17 @@
-import React from 'react';
+import React from "react";
 import { Radar } from 'react-chartjs-2';
 import ChartCard from './ChartCard';
+import { t } from "../../i18n";
 
 const IDEAL_RICE = { N: 80, P: 45, K: 45, temperature: 25, humidity: 80, ph: 6.5, rainfall: 200 };
 const LABELS = ['N', 'P', 'K', 'Temperature', 'Humidity', 'pH', 'Rainfall'];
 const KEYS   = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall'];
 
-const RadarProfileChart = ({ inputs }) => {
+const RadarProfileChart = ({ inputs, theme = "light", lang = "en" }) => {
+  const isDark = theme === "dark";
+  const textSecondary = isDark ? "#a0b09e" : "#5a5a52";
+  const gridColor = isDark ? "rgba(255,255,255,0.12)" : "rgba(128,128,128,0.2)";
+
   const data = {
     labels: LABELS,
     datasets: [
@@ -44,17 +49,17 @@ const RadarProfileChart = ({ inputs }) => {
     scales: {
       r: {
         beginAtZero: true,
-        angleLines: { color: 'rgba(128, 128, 128, 0.2)' },
-        grid: { color: 'rgba(128, 128, 128, 0.2)' },
-        pointLabels: { font: { size: 12 }, color: 'var(--text-secondary)' },
+        angleLines: { color: gridColor },
+        grid: { color: gridColor },
+        pointLabels: { font: { size: 12 }, color: textSecondary },
       },
     },
   };
 
   return (
     <ChartCard
-      title="🎯 Input vs Ideal Profile"
-      subtitle="Comparing your values against ideal rice conditions"
+      title={t(lang, "chartRadarTitle")}
+      subtitle={t(lang, "chartRadarSub")}
     >
       <Radar data={data} options={options} />
     </ChartCard>

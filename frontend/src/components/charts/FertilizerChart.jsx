@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { PolarArea } from 'react-chartjs-2';
 import ChartCard from './ChartCard';
 import mockData from '../../crop_data.json';
+import { t } from "../../i18n";
 
 const PALETTE = [
   'rgba(200,134,10,0.65)', 'rgba(74,124,89,0.65)',  'rgba(58,110,168,0.65)',
@@ -14,7 +15,7 @@ const PALETTE = [
   'rgba(231,145,232,0.65)'
 ];
 
-const FertilizerChart = ({ dynamicData }) => {
+const FertilizerChart = ({ dynamicData, theme = "light", lang = "en" }) => {
   const initial = useMemo(() => {
     const labels = [...new Set(mockData.map(d => d.label))];
     return {
@@ -32,11 +33,14 @@ const FertilizerChart = ({ dynamicData }) => {
     };
   }, []);
 
+  const isDark = theme === "dark";
+  const legendColor = isDark ? "#a0b09e" : "#5a5a52";
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } },
+      legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 }, color: legendColor } },
       datalabels: { display: false },
     },
     scales: {
@@ -46,7 +50,7 @@ const FertilizerChart = ({ dynamicData }) => {
 
   return (
     <ChartCard
-      title="💊 Fertilizer Usage"
+      title={t(lang, "chartFertilizerTitle")}
       subtitle={dynamicData ? 'Filtered to recommended crops' : 'All crops — avg kg/ha'}
     >
       <PolarArea data={dynamicData || initial} options={options} />

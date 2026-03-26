@@ -1,5 +1,6 @@
 import React from 'react';
 import './WeatherWidget.css';
+import { t } from "../i18n";
 
 const WeatherItem = ({ icon, label, value }) => (
   <div className="weather-item">
@@ -11,23 +12,23 @@ const WeatherItem = ({ icon, label, value }) => (
   </div>
 );
 
-const WeatherWidget = ({ weatherData }) => {
+const WeatherWidget = ({ weatherData, lang = "en" }) => {
   const c = weatherData?.current_condition?.[0];
 
   return (
     <section className="weather-section">
       <div className="weather-header">
-        <h2 className="weather-title">📡 Live Conditions</h2>
+        <h2 className="weather-title">{t(lang, "weatherTitle")}</h2>
         {c && (
           <span className="weather-desc">{c.weatherDesc[0].value}</span>
         )}
       </div>
       <div className="weather-grid">
-        <WeatherItem icon="🌡️" label="Temperature" value={c ? `${c.temp_C}°C` : '—'} />
-        <WeatherItem icon="💧" label="Humidity"    value={c ? `${c.humidity}%` : '—'} />
-        <WeatherItem icon="🌧️" label="Rainfall 24h" value={c ? `${c.precipMM} mm` : '0 mm'} />
-        <WeatherItem icon="💨" label="Wind Speed"  value={c ? `${c.windspeedKmph} km/h` : '—'} />
-        <WeatherItem icon="👁️" label="Visibility"  value={c ? `${c.visibility} km` : '—'} />
+        <WeatherItem icon="🌡️" label={t(lang, "weatherTemperature")} value={c ? `${c.temp_C}°C` : '—'} />
+        <WeatherItem icon="💧" label={t(lang, "weatherHumidity")}    value={c ? `${c.humidity}%` : '—'} />
+        <WeatherItem icon="🌧️" label={t(lang, "weatherRainfall")} value={c ? `${c.precipMM} mm` : '0 mm'} />
+        <WeatherItem icon="💨" label={t(lang, "weatherWind")}  value={c ? `${c.windspeedKmph} km/h` : '—'} />
+        <WeatherItem icon="👁️" label={t(lang, "weatherVisibility")}  value={c ? `${c.visibility} km` : '—'} />
       </div>
     </section>
   );
